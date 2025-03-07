@@ -16,7 +16,7 @@ const MovieForm = () => {
     const handleSubmit  = (e) => {
         e.preventDefault()
 
-        if (!title || !director || !genre) {
+        if (!title || !director || !genre || !posterUrl) {
             alert('Please Enter all the Details')
             return
         }
@@ -25,7 +25,7 @@ const MovieForm = () => {
             title,
             director,
             genre,
-            posterUrl: posterUrl || 'https://placehold.co/'
+            posterUrl: posterUrl 
         }
 
         if (selectedMovie) {
