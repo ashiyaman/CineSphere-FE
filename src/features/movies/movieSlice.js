@@ -14,7 +14,7 @@ export const fetchMovies = createAsyncThunk(
 export const addMovieAsync = createAsyncThunk(
     'movies/add',
     async (newMovie) => {
-        const response = await axios.post(`http://localhost:3000/movies`, newMovie)
+        const response = await axios.post(`https://cine-sphere-be.vercel.app/movies`, newMovie)
         if(response){
             return response.data
         }
