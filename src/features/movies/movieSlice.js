@@ -31,6 +31,16 @@ export const deleteMovieAsync = createAsyncThunk(
     }
 )
 
+export const updateMovieAsync = createAsyncThunk(
+    'movies/update',
+    async({movieId, movieData})=> {
+        const response = await axios.put(`https://cine-sphere-be.vercel.app/movies/${movieId}`, movieData)
+        if(response){
+            return response.data
+        }
+    }
+)
+
 export const movieSlice = createSlice(
     {
         name: 'movies',
@@ -72,6 +82,18 @@ export const movieSlice = createSlice(
                     state.movies = state.movies.filter(movie => movie._id !== action.payload.movie._id)
                 })
                 .addCase(deleteMovieAsync.rejected, (state, action) => {
+                    state.status = 'error',
+                    state.error = action.payload.error
+                })
+                .addCase(updateMovieAsync.pending, (state) => {
+                    state.status = 'loading'
+                })
+                .addCase(updateMovieAsync.fulfilled, (state, action) => {
+                    state.status = 'success',
+                    state.movies = state.movies.map(movie => 
+                        movie._id === action.payload._id ? action.payload : movie)
+                })
+                .addCase(updateMovieAsync.rejected, (state, action) => {
                     state.status = 'error',
                     state.error = action.payload.error
                 })

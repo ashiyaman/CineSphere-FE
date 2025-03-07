@@ -1,4 +1,4 @@
-const MovieList = ({movies, onDelete}) => {
+const MovieList = ({movies, onUpdate, onDelete}) => {
 
     return (
         <div className='row g-3'>
@@ -10,8 +10,14 @@ const MovieList = ({movies, onDelete}) => {
                              style={{ height: '300px', objectFit: 'cover' }}
                         />
                         <button 
+                            onClick={() => onUpdate(movie)} 
+                            className='btn btn-warning bg-warning text-dark btn-outline-dark fw-bold border-2 rounded-pill position-absolute top-0 start-0 m-2 px-3 py-1'
+                           >
+                            Edit
+                        </button>
+                        <button 
                             onClick={() => onDelete(movie._id)} 
-                            className='btn btn-warning bg-warning text-dark btn-outline-dark fw-bold border-2 rounded-pill position-absolute top-0 end-0 m-2 px-3 py-1'
+                            className='btn btn-danger bg-danger text-dark btn-outline-dark fw-bold border-2 rounded-pill position-absolute top-0 end-0 m-2 px-3 py-1'
                            >
                             X
                         </button>

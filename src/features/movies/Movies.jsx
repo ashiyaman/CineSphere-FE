@@ -1,16 +1,21 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchMovies, deleteMovieAsync } from './movieSlice'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import MovieList from './MovieList'
 
 const Movies = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const {movies, status, error} = useSelector(state => state.movies)
 
     useEffect(() => {
         dispatch(fetchMovies())
     }, [])
+
+    const updateMovieHandler = (movie) => {
+        navigate('/addMovie', {state: movie})
+    }
 
     const deleteMovieHandler = (movieId) => {
         dispatch(deleteMovieAsync(movieId))
@@ -26,11 +31,11 @@ const Movies = () => {
 
             {status === 'loading' && <p className='text-info'>Loading movies...</p>}
             {error && <p className='text-danger'>{error}</p>}
-            {movies.length === 0 && <p className='text-info'>No Movie Found. Please Add a Movie.</p>}
+            {movies && movies.length === 0 && <p className='text-info'>No Movie Found. Please Add a Movie.</p>}
 
             <div className='row'>
                 {movies?.length > 0 && status === 'success' && 
-                   <MovieList movies={movies} onDelete={deleteMovieHandler}/>                   
+                   <MovieList movies={movies} onUpdate={updateMovieHandler} onDelete={deleteMovieHandler}/>                   
                 }
             </div>
         </main>
